@@ -1,0 +1,13 @@
+Prototype (Corey, Fry, Joe)
+-generate a tile map
+-combine with existing player demo
+-have the player move around the level
+Research
+-tile based collisions
+-github containing level designs
+AI
+-Problem with Logic, turning the enemy around
+Health
+-variables done
+-need to draw bar to screen
+

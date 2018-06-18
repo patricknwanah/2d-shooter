@@ -1,0 +1,30 @@
+Week 1:
+
+Sprite creation.
+    - Let's try and get a basic sprite, with movement created. 
+    - Hammer down the genre of game, art style, and apply this to sprite.
+
+Week 2:
+
+Level Creation.
+    -Let's create one (basic) level, and make sure the sprite can operate within it.
+    -This will mean that we need to make art for it as well.
+
+Week 3:
+
+Physics Creation.
+    -Basic Physics implemented: Gravity, collision detection, etc.
+    -Sync the physics with the sprite i.e Sprite falls with gravity, stops at blocks/walls.
+
+Week 4:
+
+AI Creation:
+    -Let's get a basic AI unit working that we can build upon.
+    -Basic movement, player targeting, pathfinding.
+
+Week 5:
+
+UI Creation.
+    -Get a very basic UI working. Health for the player, Number of lives, points, etc.
+    -Have the AI affect HP and whatnot.
+

@@ -1,0 +1,26 @@
+So, to install pygame, follow these instructions:
+
+1) Uninstall current version of Python
+	-- for Windows 10: search uninstall or remove, and
+	-- go click Programs and Features. Scroll down to 
+	-- your current version of Python and uninstall it.
+2) Install Python 3.2
+	--Google search: Python 3.2. Scroll to bottom of page,
+	--and download the pythonx86 MSI 64 bit version
+	--(this will become a 32bit version on labtops.)
+	--IMPORTANT: SAVE THE FILE PATH IN WHICH PYTHON IS
+	--INSTALLED!!!!
+3) Install pygame 3.2
+	--Google: install pygame. Scroll down to pygame 3.2
+	--IMPORTANT: INSTALL PYGAME INTO WHEREVER YOUR PYTHON
+	--PATH IS. IT MUST BE IN THE SAME FOLDER AS PYTHON.
+4) Open Virtual Studio, Create Project, Test.
+	--Create a new Python Project in VS. (If you need 
+	--(explanation, please email me -- mrf77@drexel.edu.)
+	--(I'm assuming everyone knows how to do this.)
+	--TYPE ONLY THE FOLLOWING:
+	--import pygame
+	--print("Hello World".)
+	--IF ALL GOES WELL, HELLO WORLD SHOULD BE PRINTED TO 
+	--THE CONSOLE, MEANING THAT PYGAME WAS INSTALLED SUCCESSFULLY.
+	--Again, Contact me ASAP if you have trouble.

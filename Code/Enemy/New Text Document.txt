@@ -1,0 +1,258 @@
+import pygame, math
+from Player_Assets import *
+
+class Enemy((pygame.sprite.Sprite)):
+    #constructor for Enemy class
+    def __init__(self, x, y, image, gameDisplay, speed):
+        pygame.sprite.Sprite.__init__(self)
+        self.x = x
+        self.y = y
+        self.speed = speed
+        self.image = pygame.image.load(image).convert()
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.area = gameDisplay.get_rect()
+        self.imgwid = 24
+        self.imghigh = 34
+        self.display_width = 800
+        self.display_height= 600
+        self.movement = 'right'
+        self.black = (0,0,0)
+        self.white = (255,255,255)
+        self.red = (255,0,0)
+
+    def Circle(self, gameDisplay):
+        #circle(Surface, color, pos, radius, width=0) -> Rect
+        pygame.draw.circle(gameDisplay, self.black, (self.x + 10, self.y + 10), 100, 0)
+
+    def sight(self, gameDisplay):
+        #pygame.draw.rect(screen, color, (x,y,width,height), thickness)
+        pygame.draw.rect(gameDisplay, self.red, (self.x, self.y, 200, 10), 0)
+    def sight2(self, gameDisplay):
+        #pygame.draw.rect(screen, color, (x,y,width,height), thickness)
+        pygame.draw.rect(gameDisplay, self.red, (self.x, self.y, -200, 10), 0)
+
+    def agro(self, player):
+        if self.y == player.y and player.x in range(self.x, self.x + 201):
+            #for i in range(self.x, self.x + 201):
+            #    if(player.x == i and self.y == player.y):
+            self.follow(player)
+                #elif(player.y == self.y and player.x < self.x):
+                #    self.patrol()
+        #elif(self.y == player.y and player.x < self.x):
+        #    self.patrol(gameDisplay)
+        #elif(self.y == player.y and player.x > self.x + 201):
+        #    self.patrol(gameDisplay)
+        #else:
+        #    self.patrol(gameDisplay)
+
+    def agro2(self, player):
+        if self.y == player.y and player.x in range(self.x, self.x - 201):
+            #for i in range(self.x, self.x + 201):
+            #    if(player.x == i and self.y == player.y):
+            self.follow(player)
+                #elif(player.y == self.y and player.x < self.x):
+                #    self.patrol()
+        #elif(self.y == player.y and player.x < self.x):
+        #    self.patrol(gameDisplay)
+        #elif(self.y == player.y and player.x > self.x - 201):
+        #    self.patrol(gameDisplay)
+        #else:
+        #    self.patrol(gameDisplay)
+
+
+    def follow(self, player):
+        if(player.rect.x > self.rect.x and player.rect.y < self.rect.y):
+            self.rightup()
+        elif(player.rect.x > self.rect.x and player.rect.y == self.rect.y):
+            self.moveright()
+        elif(player.rect.x > self.rect.x and player.rect.y > self.rect.y):
+            self.rightdown()
+        elif(player.rect.x == self.rect.x and player.rect.y > self.rect.y):
+            self.movedown()
+        elif(player.rect.x == self.rect.x and player.rect.y < self.rect.y):
+            self.moveup()
+        elif(player.rect.x < self.rect.x and player.rect.y < self.rect.y):
+            self.leftup()
+        elif(player.rect.x < self.rect.x and player.rect.y == self.rect.y):
+            self.moveleft()
+        elif(player.rect.x < self.rect.x and player.rect.y > self.rect.y):
+            self.leftdown()
+        
+            #print('dy ' + str(dy))
+            #print('dx ' + str(dx))
+        #else:
+            #self.stop()
+    #spawn AI with given location from _init_ or the setters
+    def update(self, x_change, y_change):
+        #change position according to velocity values if the new position is within the screen.
+        newpos = self.rect.move(x_change, 0)
+        if self.area.contains(newpos):
+            self.x += x_change
+        newpos = self.rect.move(0, y_change)
+        if self.area.contains(newpos):
+            self.y += y_change
+
+        self.rect.x = self.x
+        self.rect.y = self.y
+        
+        #rect should always be at x,y (undoes the move above if movement failed).
+ 
+        
+    def patrol(self,gameDisplay,player):
+        if self.rect.y >= self.display_height - self.imghigh or self.rect.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.rect.x >= self.display_width - self.imgwid or self.rect.x < 0:
+            self.speed = 0
+        if self.movement == 'right':
+            self.agro(player)
+            self.moveright()
+            self.sight(gameDisplay)
+            if self.x >= 300:
+                self.movement = 'left'
+        elif self.movement == 'left':
+            self.agro2(player)
+            self.moveleft()
+            self.sight2(gameDisplay)
+
+            if self.x == 30:
+                self.movement = 'right'
+        #if self.movement == 'down':
+        #    if self.y < 100:
+        #        self.y += 5
+        #    elif self.y >= 100:
+        #        self.movement = 'right'
+        #elif self.movement == 'right':
+        #    self.x += 5
+        #    if self.x > 200:
+        #        self.movement = 'up'
+        #elif self.movement == 'up':
+        #    self.y -= 5
+        #    if self.y < 30:
+        #        self.movement = 'left'
+        #elif self.movement == 'left':
+        #    self.x -= 5
+        #    if self.x < 30:
+        #        self.movement = 'down'
+
+    def spawn(self,display):
+        display.blit(self.image,(self.x,self.y))
+
+    def getdisplaywidth():
+        return self.display_width
+
+    def movedown(self):
+        if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+        else:
+            self.y += self.speed
+
+    def moveleft(self):
+        if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+        else:
+            self.x -= self.speed
+     
+    def moveright(self):
+        if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+        else:
+            self.x += self.speed
+
+    def moveup(self):
+        if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+        else:
+            self.y -= self.speed
+
+    def rightdown(self):
+        if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+        else:
+            self.x += self.speed
+            self.y += self.speed
+
+    def rightup(self):
+         if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+         elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+         else:
+            self.x += self.speed
+            self.y -= self.speed
+
+    def leftdown(self):
+        if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+        else:
+            self.x -= self.speed
+            self.y += self.speed
+
+    def leftup(self):
+        if self.y >= self.display_height - self.imghigh or self.y < 0:
+            #self.x = 0
+            self.speed = 0
+        elif self.x >= self.display_width - self.imgwid or self.x < 0:
+            self.speed = 0
+            #self.y = 0
+        else:
+            self.x -= self.speed
+            self.y -= self.speed
+
+    def enemystop(self,playerx,playery):
+       if( self.x == playerx and self.y == playery):
+           self.speed = 0
+       else:
+           self.speed = self.speed
+            
+
+    def stop(self):
+            self.speed = 0
+
+    def getimgwid(self):
+        return self.imgwid1
+
+    def getimghigh(self):
+        return self.imghigh1
+
+    #set x coordinate   
+    def setX(self, x):
+        self.x = x
+
+    #set y coordinate
+    def setY(self,y):
+        self.y = y
+
+    def getX(self):
+        return self.x
+
+    def getY(self):
+        return self.y
